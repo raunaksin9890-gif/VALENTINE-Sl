@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Valentine Special 😂</title>
-
+<title>Ultimate Valentine 😂</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
@@ -37,18 +36,10 @@ button {
     cursor: pointer;
 }
 
-#yesBtn {
-    background-color: green;
-    color: white;
-}
+#yesBtn { background: green; color: white; }
+#noBtn { background: red; color: white; position: absolute; }
 
-#noBtn {
-    background-color: red;
-    color: white;
-    position: absolute;
-}
-
-/* Full screen video container */
+/* Fullscreen Video */
 #videoContainer {
     display: none;
     position: fixed;
@@ -62,19 +53,36 @@ button {
     flex-direction: column;
 }
 
-iframe {
+video {
     width: 100%;
     height: 100%;
-    border: none;
+    object-fit: cover;
 }
 
 #finalMsg {
     display: none;
     position: absolute;
-    bottom: 40px;
+    bottom: 80px;
     color: yellow;
-    font-size: 24px;
+    font-size: 26px;
     font-weight: bold;
+}
+
+#replayBtn {
+    display: none;
+    position: absolute;
+    bottom: 30px;
+    padding: 10px 20px;
+    font-size: 16px;
+    background: white;
+    border-radius: 8px;
+}
+
+canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
 }
 </style>
 </head>
@@ -83,27 +91,28 @@ iframe {
 
 <div class="container">
     <h1>BAHEN/BHAI VALENTINE DAY AA GYA <br> MERE LIYE BHI LADKI DHUNDH DE 😂</h1>
-
     <button id="yesBtn">HA ❤️</button>
     <button id="noBtn">NA 😜</button>
 </div>
 
 <div id="videoContainer">
-    <iframe 
-        src="swenii_b_b418d7c36db644d18023f9927b0887d6.mp4"
-        allow="autoplay; fullscreen"
-        allowfullscreen>
-    </iframe>
+    <video id="myVideo" playsinline>
+        <source src="yourvideo.mp4" type="video/mp4">
+    </video>
 
     <div id="finalMsg">Aisa hi ladki dhundhna 😎❤️</div>
+    <button id="replayBtn">Replay 🔁</button>
 </div>
 
-<script>
+<canvas id="confetti"></canvas>
 
+<script>
 let noBtn = document.getElementById("noBtn");
 let yesBtn = document.getElementById("yesBtn");
 let videoContainer = document.getElementById("videoContainer");
 let finalMsg = document.getElementById("finalMsg");
+let replayBtn = document.getElementById("replayBtn");
+let myVideo = document.getElementById("myVideo");
 
 // NA button bhagega
 noBtn.addEventListener("mouseover", function() {
@@ -116,13 +125,55 @@ noBtn.addEventListener("mouseover", function() {
 // HA click
 yesBtn.addEventListener("click", function() {
     videoContainer.style.display = "flex";
-
-    // 10 sec baad message show
-    setTimeout(function() {
-        finalMsg.style.display = "block";
-    }, 10000);
+    myVideo.play();
 });
 
+// Video end hone par
+myVideo.addEventListener("ended", function() {
+    finalMsg.style.display = "block";
+    replayBtn.style.display = "block";
+    startConfetti();
+});
+
+// Replay
+replayBtn.addEventListener("click", function() {
+    finalMsg.style.display = "none";
+    replayBtn.style.display = "none";
+    myVideo.currentTime = 0;
+    myVideo.play();
+});
+
+// 🎉 Confetti Animation
+let canvas = document.getElementById("confetti");
+let ctx = canvas.getContext("2d");
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let pieces = [];
+
+function startConfetti() {
+    pieces = [];
+    for (let i = 0; i < 150; i++) {
+        pieces.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            size: Math.random() * 8 + 2,
+            speed: Math.random() * 3 + 1
+        });
+    }
+    animateConfetti();
+}
+
+function animateConfetti() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = "white";
+    pieces.forEach(p => {
+        ctx.fillRect(p.x, p.y, p.size, p.size);
+        p.y += p.speed;
+        if (p.y > canvas.height) p.y = 0;
+    });
+    requestAnimationFrame(animateConfetti);
+}
 </script>
 
 </body>
