@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Valentine Special 😂</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(to right, #ff4e50, #fc913a);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    overflow: hidden;
+}
+
+.container {
+    position: relative;
+}
+
+h1 {
+    color: white;
+    font-size: 24px;
+}
+
+button {
+    padding: 12px 25px;
+    font-size: 18px;
+    margin: 15px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+#yesBtn {
+    background-color: green;
+    color: white;
+}
+
+#noBtn {
+    background-color: red;
+    color: white;
+    position: absolute;
+}
+
+/* Full screen video container */
+#videoContainer {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: black;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+#finalMsg {
+    display: none;
+    position: absolute;
+    bottom: 40px;
+    color: yellow;
+    font-size: 24px;
+    font-weight: bold;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>BAHEN/BHAI VALENTINE DAY AA GYA <br> MERE LIYE BHI LADKI DHUNDH DE 😂</h1>
+
+    <button id="yesBtn">HA ❤️</button>
+    <button id="noBtn">NA 😜</button>
+</div>
+
+<div id="videoContainer">
+    <iframe 
+        src="https://player.cloudinary.com/embed/?cloud_name=dhqh6toj9&public_id=swenii_b_b418d7c36db644d18023f9927b0887d6_ivuy22"
+        allow="autoplay; fullscreen"
+        allowfullscreen>
+    </iframe>
+
+    <div id="finalMsg">Aisa hi ladki dhundhna 😎❤️</div>
+</div>
+
+<script>
+
+let noBtn = document.getElementById("noBtn");
+let yesBtn = document.getElementById("yesBtn");
+let videoContainer = document.getElementById("videoContainer");
+let finalMsg = document.getElementById("finalMsg");
+
+// NA button bhagega
+noBtn.addEventListener("mouseover", function() {
+    let x = Math.random() * (window.innerWidth - 100);
+    let y = Math.random() * (window.innerHeight - 50);
+    noBtn.style.left = x + "px";
+    noBtn.style.top = y + "px";
+});
+
+// HA click
+yesBtn.addEventListener("click", function() {
+    videoContainer.style.display = "flex";
+
+    // 10 sec baad message show
+    setTimeout(function() {
+        finalMsg.style.display = "block";
+    }, 10000);
+});
+
+</script>
+
+</body>
+</html>
