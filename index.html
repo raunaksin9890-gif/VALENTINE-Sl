@@ -18,14 +18,9 @@ body {
     overflow: hidden;
 }
 
-.container {
-    position: relative;
-}
+.container { position: relative; }
 
-h1 {
-    color: white;
-    font-size: 24px;
-}
+h1 { color: white; font-size: 24px; }
 
 button {
     padding: 12px 25px;
@@ -39,7 +34,6 @@ button {
 #yesBtn { background: green; color: white; }
 #noBtn { background: red; color: white; position: absolute; }
 
-/* Fullscreen Video */
 #videoContainer {
     display: none;
     position: fixed;
@@ -96,8 +90,8 @@ canvas {
 </div>
 
 <div id="videoContainer">
-    <video id="swenii_b_b418d7c36db644d18023f9927b0887d6.mp4" playsinline>
-        <source src="swenii_b_b418d7c36db644d18023f9927b0887d6.mp4" type="video/mp4">
+    <video id="myVideo" autoplay muted playsinline>
+        <source src="./swenii_b_b418d7c36db644d18023f9927b0887d6.mp4" type="video/mp4">
     </video>
 
     <div id="finalMsg">Aisa hi ladki dhundhna 😎❤️</div>
@@ -114,7 +108,6 @@ let finalMsg = document.getElementById("finalMsg");
 let replayBtn = document.getElementById("replayBtn");
 let myVideo = document.getElementById("myVideo");
 
-// NA button bhagega
 noBtn.addEventListener("mouseover", function() {
     let x = Math.random() * (window.innerWidth - 100);
     let y = Math.random() * (window.innerHeight - 50);
@@ -122,20 +115,17 @@ noBtn.addEventListener("mouseover", function() {
     noBtn.style.top = y + "px";
 });
 
-// HA click
 yesBtn.addEventListener("click", function() {
     videoContainer.style.display = "flex";
     myVideo.play();
 });
 
-// Video end hone par
 myVideo.addEventListener("ended", function() {
     finalMsg.style.display = "block";
     replayBtn.style.display = "block";
     startConfetti();
 });
 
-// Replay
 replayBtn.addEventListener("click", function() {
     finalMsg.style.display = "none";
     replayBtn.style.display = "none";
@@ -143,7 +133,6 @@ replayBtn.addEventListener("click", function() {
     myVideo.play();
 });
 
-// 🎉 Confetti Animation
 let canvas = document.getElementById("confetti");
 let ctx = canvas.getContext("2d");
 canvas.width = window.innerWidth;
