@@ -53,23 +53,40 @@ video {
     object-fit: cover;
 }
 
-#finalMsg {
-    display: none;
-    position: absolute;
-    bottom: 80px;
-    color: yellow;
-    font-size: 26px;
-    font-weight: bold;
+/* Fade overlay */
+#fadeOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: black;
+    opacity: 0;
+    transition: opacity 2s ease;
+    pointer-events: none;
 }
 
-#replayBtn {
-    display: none;
-    position: absolute;
-    bottom: 30px;
-    padding: 10px 20px;
-    font-size: 16px;
+#fadeOverlay.show {
+    opacity: 1;
+}
+
+/* Center Message Box */
+#finalMsg {
+    position: fixed;
     background: white;
-    border-radius: 8px;
+    padding: 25px 40px;
+    border-radius: 15px;
+    font-size: 26px;
+    font-weight: bold;
+    color: #ff4e50;
+    opacity: 0;
+    transform: scale(0);
+    transition: all 0.8s ease;
+}
+
+#finalMsg.show {
+    opacity: 1;
+    transform: scale(1);
 }
 
 canvas {
@@ -90,13 +107,13 @@ canvas {
 </div>
 
 <div id="videoContainer">
-    <video id="myVideo" autoplay muted playsinline>
+    <video id="myVideo" playsinline>
         <source src="./swenii_b_b418d7c36db644d18023f9927b0887d6.mp4" type="video/mp4">
     </video>
-
-    <div id="finalMsg">Aisa hi ladki dhundhna 😎❤️</div>
-    <button id="replayBtn">Replay 🔁</button>
 </div>
+
+<div id="fadeOverlay"></div>
+<div id="finalMsg">Aisi ladki dhund de 😎❤️</div>
 
 <canvas id="confetti"></canvas>
 
@@ -105,9 +122,10 @@ let noBtn = document.getElementById("noBtn");
 let yesBtn = document.getElementById("yesBtn");
 let videoContainer = document.getElementById("videoContainer");
 let finalMsg = document.getElementById("finalMsg");
-let replayBtn = document.getElementById("replayBtn");
+let fadeOverlay = document.getElementById("fadeOverlay");
 let myVideo = document.getElementById("myVideo");
 
+// NA button bhagega
 noBtn.addEventListener("mouseover", function() {
     let x = Math.random() * (window.innerWidth - 100);
     let y = Math.random() * (window.innerHeight - 50);
@@ -115,24 +133,26 @@ noBtn.addEventListener("mouseover", function() {
     noBtn.style.top = y + "px";
 });
 
+// HA click
 yesBtn.addEventListener("click", function() {
     videoContainer.style.display = "flex";
     myVideo.play();
 });
 
+// Video end
 myVideo.addEventListener("ended", function() {
-    finalMsg.style.display = "block";
-    replayBtn.style.display = "block";
-    startConfetti();
+
+    // Fade to black
+    fadeOverlay.classList.add("show");
+
+    // 5 sec baad message + confetti
+    setTimeout(function(){
+        finalMsg.classList.add("show");
+        startConfetti();
+    }, 5000);
 });
 
-replayBtn.addEventListener("click", function() {
-    finalMsg.style.display = "none";
-    replayBtn.style.display = "none";
-    myVideo.currentTime = 0;
-    myVideo.play();
-});
-
+// 🎉 Confetti
 let canvas = document.getElementById("confetti");
 let ctx = canvas.getContext("2d");
 canvas.width = window.innerWidth;
